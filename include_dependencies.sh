@@ -18,6 +18,20 @@ mkdir -p ${PREFIX}
 
 echo $SYS_ROOT $BUILD_ROOT $PATH $PREFIX
 
+
+strip(){
+	if [ $STRIPPING == 'ON' ]; then
+		SO_FILES=$(find . -type f -name "*.so")
+		$STRIP --strip-unneeded $SO_FILES
+	fi
+}
+
+clean(){
+	if [ $CLEANBUILDDIR == 'ON' ]; then
+		git clean -xdf
+	fi
+}
+
 build_with_cmake() {
         cp ${BUILD_ROOT}/android_cmake.sh .
         echo "$CURRENT_BUILD - $(git rev-parse --short HEAD)" >> $BUILD_STATUS_FILE
@@ -25,19 +39,33 @@ build_with_cmake() {
         mkdir -p $BUILD_FOLDER
         echo $PWD
         ./android_cmake.sh $@ -DCMAKE_VERBOSE_MAKEFILE=ON .
-        cd $BUILD_FOLDER
+        pushd $BUILD_FOLDER
         make -j$JOBS
+	strip
         make -j$JOBS install
+	popd
+
+	if [ $CLEANBUILDDIR == 'ON' ]; then
+		rm -rf $BUILD_FOLDER
+	fi
+
 }
 
 android_configure() {
         cp ${BUILD_ROOT}/android_configure.sh .
         echo "$CURRENT_BUILD - $(git rev-parse --short HEAD)" >> $BUILD_STATUS_FILE
         ./android_configure.sh $@
+
+	if [ "$CURRENT_BUILD" = "gettext" ]; then
+		autoreconf
+	fi
+
+	strip
         make -j$JOBS LDFLAGS="$LDFLAGS"
         make -j$JOBS install
 
         LDFLAGS="$LDFLAGS_COMMON"
+	clean
 }
 
 #############################################################
@@ -52,9 +80,8 @@ pushd ${BUILD_ROOT}/Boost-for-Android
 git clean -xdf
 export CURRENT_BUILD=boost-for-android
 
-#./build-android.sh --boost=1.69.0 --toolchain=llvm --prefix=$(dirname ${PREFIX}) --arch=$ABI --target-version=28 ${ANDROID_NDK_ROOT}
-
-./build-android.sh --boost=1.76.0 --layout=system --toolchain=llvm --prefix=${PREFIX} --arch=$ABI --target-version=${API} ${ANDROID_NDK_ROOT}
+strip
+./build-android.sh --boost=1.82.0 --layout=system --toolchain=llvm --prefix=${PREFIX} --arch=$ABI --target-version=${API} ${ANDROID_NDK_ROOT}
 popd
 }
 
@@ -75,7 +102,9 @@ export CURRENT_BUILD=libzmq
 ./configure --enable-shared --disable-static --build=x86_64-unknown-linux-gnu --host=$TARGET_PREFIX$API --prefix=${PREFIX} LDFLAGS="-L${PREFIX}/lib" CPPFLAGS="-fPIC -I${PREFIX}/include"
 
 make -j ${JOBS}
+strip
 make install
+clean
 
 # CXX Header-Only Bindings
 wget -O $PREFIX/include/zmq.hpp https://raw.githubusercontent.com/zeromq/cppzmq/master/zmq.hpp
@@ -108,7 +137,10 @@ echo $NEON_FLAG
   --prefix=$PREFIX
 
 make -j ${JOBS}
+strip
 make install
+clean
+
 popd
 }
 
@@ -173,6 +205,7 @@ export CURRENT_BUILD=libgmp
 ./configure --enable-maintainer-mode --prefix=${PREFIX} \
             --host=$TARGET_BINUTILS \
             --enable-cxx
+make clean
 make -j ${JOBS}
 make install
 ABI=$ABI_BACKUP
@@ -250,6 +283,7 @@ $CMAKE -DCMAKE_INSTALL_PREFIX=${PREFIX} \
   -DCMAKE_FIND_ROOT_PATH=${PREFIX} \
   -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS_COMMON" \
   -DCMAKE_VERBOSE_MAKEFILE=ON \
+  -DVOLK_CPU_FEATURES=ON \
   ../
 make -j ${JOBS}
 make install
