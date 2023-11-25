@@ -61,7 +61,7 @@ RUN sudo ln -s /home/$USER/Tools/QtCreator/bin/qtcreator.sh /usr/local/bin/qtcre
 
 # build dependencies
 WORKDIR /home/$USER/src
-RUN git clone https://github.com/analogdevicesinc/gnuradio-android.git --branch gnuradio-3.10-android
+RUN git clone https://github.com/jrajason/gnuradio-android.git --branch gnuradio-3.10-android
 WORKDIR /home/$USER/src/gnuradio-android
 RUN ./init_env.sh
 RUN ./build_python_modules.sh install_deps
