@@ -46,6 +46,7 @@ RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;30.0.3"
 RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "cmdline-tools;latest"
 
 RUN sudo ln -s /home/$USER/Android/Sdk/platform-tools/adb /usr/local/bin/adb
+RUN sudo python3 -m pip install -U pip
 
 #install Qt
 RUN pip3 install aqtinstall && /home/analog/.local/bin/aqt install-qt linux android 5.15.2 -O /home/$USER/Qt && /home/analog/.local/bin/aqt install-qt linux desktop 5.15.2 -O /home/$USER/Qt
