@@ -36,8 +36,8 @@ create_venv() {
 #	cross-pip install pybind11==2.4.3
 	build-pip install packaging
 	cross-pip install packaging
-	build-pip install cython
-	cross-pip install cython
+	build-pip install cython==0.28.5
+	cross-pip install cython==0.28.5
 	build-pip install mako==1.1.0
 	cross-pip install mako==1.1.0
 	build-pip install sip
