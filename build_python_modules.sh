@@ -30,7 +30,7 @@ create_venv() {
 	build-pip install setuptools --upgrade
 	build-pip install numpy==1.17.4 # install python only on build-pip so crosscompile checks for numpy pass
 #	cross-pip install numpy==1.17.4 
-
+	build-pip install pytest
 	cross-pip install pytest
 #	build-pip install pybind11
 #	cross-pip install pybind11==2.4.3
