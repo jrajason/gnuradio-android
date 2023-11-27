@@ -46,7 +46,7 @@ RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;30.0.3"
 RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "cmdline-tools;latest"
 
 RUN sudo ln -s /home/$USER/Android/Sdk/platform-tools/adb /usr/local/bin/adb
-RUN sudo python3 -m pip install -U pip
+RUN sudo python3 -m pip install --upgrade pip
 RUN pip3 install --user --upgrade pip setuptools
 
 #install Qt
