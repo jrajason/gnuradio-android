@@ -76,7 +76,7 @@ build_pyqt5-sip() {
 	LDFLAGS='-lpython3' cross-python setup.py bdist
 	
 	#hack as i don't know how to disable egg install
-	mkdir -p /home/$USER/src/gnuradio-android/venv/cross/lib/python$PYTHON_VERSION/PyQt5/
+	mkdir -p /home/$USER/src/scopy-android-deps/gnuradio-android/venv/cross/lib/python$PYTHON_VERSION/PyQt5/
 	cp build/lib.linux-aarch64-cpython-3$PYTHON_VERSION_MINOR/PyQt5/sip.cpython-3$PYTHON_VERSION_MINOR.so $GR4A_SCRIPT_DIR/venv/cross/lib/python3.$PYTHON_VERSION_MINOR/PyQt5/
 	popd
 }
@@ -96,7 +96,7 @@ build_pyqt5() {
 	popd
 	pushd $GR4A_SCRIPT_DIR/PyQt5-5.15.7
 	ANDROID_NDK_PLATFORM=android-30\
-		/home/$USER/src/gnuradio-android/venv/cross/bin/sip-build\
+		/home/$USER/src/scopy-android-deps/gnuradio-android/venv/cross/bin/sip-build\
 	       	--confirm-license\
 	       	--jobs $JOBS\
 	       	--no-tools\
