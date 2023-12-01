@@ -28,8 +28,8 @@ create_venv() {
 
 	. $GR4A_SCRIPT_DIR/venv/bin/activate
 	build-pip install setuptools --upgrade
-	python3 -m pip install numpy==1.17.4 --no-build-isolation
-#	build-pip install numpy==1.17.4 # install python only on build-pip so crosscompile checks for numpy pass
+#	python3 -m pip install numpy==1.17.4 --no-build-isolation
+	build-pip install numpy==1.17.4 --no-build-isolation  # install python only on build-pip so crosscompile checks for numpy pass
 #	cross-pip install numpy==1.17.4 
 	build-pip install pytest
 	cross-pip install pytest
