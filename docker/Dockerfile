@@ -5,8 +5,8 @@ SHELL ["/bin/bash", "-c"]
 ARG USER=analog
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update
-RUN apt-get install -y mlocate git git-gui vim wget unzip sudo xserver-xorg openjdk-11-jre cmake libtool build-essential pkg-config autogen bison flex texinfo python-dev python-mako python-six swig3.0 python3-mako python3-numpy gettext libglib2.0-dev texinfo subversion libxkbcommon-x11-0 libxcb-xinerama0 libqt5gui5 libncurses5 autoconf-archive mm-common python3-pip
+RUN sudo apt-get update
+RUN sudo apt-get install -y mlocate git git-gui vim wget unzip sudo xserver-xorg openjdk-11-jre cmake libtool build-essential pkg-config autogen bison flex texinfo python-dev python-mako python-six swig3.0 python3-mako python3-numpy gettext libglib2.0-dev texinfo subversion libxkbcommon-x11-0 libxcb-xinerama0 libqt5gui5 libncurses5 autoconf-archive mm-common python3-pip
 
 
 RUN groupadd -g 1000 -r $USER
