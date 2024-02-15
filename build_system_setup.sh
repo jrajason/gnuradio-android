@@ -3,7 +3,7 @@
 ############### SYSTEM SPECIFIC DEFINES ############
 export USER_DIR=$USER
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-export CMAKE=$HOME/cmake-3.18.1-linux-x86_64/bin/cmake
+export CMAKE=$HOME/cmake-3.23.2-linux-x86_64/bin/cmake
 export QT_VERSION_STRING=5.15.2
 export QT_HOME=$HOME/Qt
 export QT_INSTALL_PREFIX_NO_POSTFIX=${QT_HOME}/${QT_VERSION_STRING}/android
