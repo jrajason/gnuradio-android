@@ -41,9 +41,9 @@ RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} --licenses
 RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "platforms;android-29"
 RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "ndk;23.1.7779620"
 RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools"
-RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;28.0.3"
-RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "cmake;3.10.2.4988404"
-RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;30.0.3"
+RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;31.0.0"
+RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "cmake;3.23.2"
+#RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;30.0.3"
 RUN yes | ./sdkmanager --sdk_root=${ANDROID_HOME} "cmdline-tools;latest"
 
 RUN sudo ln -s /home/$USER/Android/Sdk/platform-tools/adb /usr/local/bin/adb
